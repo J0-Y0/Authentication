@@ -107,11 +107,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",
+# ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "account.CustomUser"
 
 
 # django mail backend setting
@@ -124,11 +127,27 @@ EMAIL_USE_TLS = True
 TAGGIT_CASE_INSENSITIVE = True
 
 
+# REST_FRAMEWORK
+REST_FRAMEWORK = {
+    # "DEFAULT_PERMISSION_CLASSES": [
+    #     "rest_framework.permissions.AllowAny",
+    # ],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+}
+
 # djoser setting
 DJOSER = {
-    "PASSWORD_RESET_CONFIRM_URL": "#/password/reset/confirm/{uid}/{token}",
-    "USERNAME_RESET_CONFIRM_URL": "#/username/reset/confirm/{uid}/{token}",
-    "ACTIVATION_URL": "#/activate/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": "/password/reset/confirm/{uid}/{token}",
+    "USERNAME_RESET_CONFIRM_URL": "/username/reset/confirm/{uid}/{token}",
+    "ACTIVATION_URL": "/activate/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
-    "SERIALIZERS": {},
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "SERIALIZERS": {
+        "user_create": "account.serializers.CustomUserCreateSerializer",
+        "user_delete": "djoser.serializers.UserDeleteSerializer",
+        "user": "account.serializers.CustomUserCreateSerializer",
+    },
+    "LOGIN_FIELD": "email",
 }
