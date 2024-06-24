@@ -9,7 +9,9 @@ const PrivateRoute = ({ children, ...rest }) => {
     return (
     
       <Routes>
-            <Route {...rest} element={IsAuthenticated?children:<LoginPage />} />
+          <Route {...rest} element={children } />
+
+            {/* <Route {...rest} element={IsAuthenticated?children:<LoginPage />} /> */}
 
       </Routes>
   )
