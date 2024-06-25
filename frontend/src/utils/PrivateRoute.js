@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import LoginPage from '../pages/LoginPage'
+import AuthContext from '../context/AuthContext'
 
 const PrivateRoute = ({ children, ...rest }) => {
-    console.log("Private Route is working ")
-    const IsAuthenticated = false
-
+    const {user} = useContext(AuthContext)
     return (
     
       <Routes>
-          <Route {...rest} element={children } />
+          {/* <Route {...rest} element={children } /> */}
 
-            {/* <Route {...rest} element={IsAuthenticated?children:<LoginPage />} /> */}
+        <Route {...rest} element={user ?children:<LoginPage />} />
 
       </Routes>
   )

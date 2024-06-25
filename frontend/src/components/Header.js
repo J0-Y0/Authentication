@@ -4,13 +4,17 @@ import AuthContext from '../context/AuthContext'
 
 const Header = () => {
 
-  const {name}  = useContext(AuthContext)
+  const { user, logoutUser }  = useContext(AuthContext)
   return (
     <div>
-      <h3>hello {name}</h3>
           <Link to="/home">Home</Link>
           <span> | </span>
-          <Link to="/login">Login</Link>
+          
+      {user ? <div>
+                <button onClick={logoutUser} >logout</button>
+                <h3>hello {user.name}</h3>
+              </div>
+             : <Link to="/login">Login</Link> }
 
     </div>
   )

@@ -7,7 +7,7 @@ const HomePage = () => {
     <div>
       <h1>Home Page</h1>
       <p>This is the home page</p>
-      <p>welcome {user}</p>
+      {user && <p>welcome {user.user_id}</p>}
     </div>
   )
 }

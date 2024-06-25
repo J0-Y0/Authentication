@@ -4,17 +4,16 @@ import { jwtDecode } from "jwt-decode";
 
 
 export const AuthContext = createContext()
-
 export default AuthContext
 
 
 export const AuthProvider = ({ children }) => {
 
-  const [user, setUser] = useState(null)
-  const [authToken, setAuthToken] = useState(null)
+  const authToken = localStorage.getItem('authToken')
+  const [user, setUser] = useState(authToken ? jwtDecode(authToken):null)
+  // const [authToken, setAuthToken] = useState(null)
   let loginUser = async (e) => {
       e.preventDefault()
-      console.log('form is submitted')
       let response = await fetch('http://127.0.0.1:8000/account/api/token/', {
         method : 'POST',
         headers: {
@@ -26,24 +25,24 @@ export const AuthProvider = ({ children }) => {
   
         }) 
       })
-    let data = await response.json()
-    console.log("data:", data)
+      const data = await response.json()
     if (response.status === 200) {
-      const decode = jwtDecode(data.access)
-      console.log(decode.name)
-      // setAuthToken(data)
-       setUser(jwtDecode(data.access).name)
-      
+      const token = JSON.stringify(data)
+      localStorage.setItem('authToken', token )
+      setUser(jwtDecode(token))
     } else{
       alert("Unable to login: some thing went wrong")
     }
-      
+  }
+  let logoutUser = () => { 
+    localStorage.removeItem('authToken')
+    setUser(null)
 
   }
 
-
   let contextData = {
     loginUser: loginUser,
+    logoutUser: logoutUser,
     user: user
 
   }
