@@ -6,24 +6,27 @@ const HomePage = () => {
   const [notes, setNotes] = useState()
   useEffect(() => {
     getNotes()
-  }, [])
+  }, [notes])
 
   const getNotes = async () => {
-    let response = await fetch('http://127.0.0.1:8000/account/api/notes/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': 'Bearer ' + String(JSON.parse(authToken).access)
-      },
-    })
-    let data = await response.json()
-
-    if (response.status === 200) { 
-      setNotes(data)
-    } else {
-      logoutUser()
+    try {
+          let response = await fetch('http://127.0.0.1:8000/account/api/notes/', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': 'Bearer ' + String(JSON.parse(authToken).access)
+            },
+          })
+          if (response.status === 200) {
+            let data = await response.json()
+            setNotes(data)
+          } else {
+            logoutUser()
+          }
+    }catch (error) { 
+      alert("something went wrong, please try again,there may be a connection error")
+      console.error(error)
     }
-
 
 
   }
