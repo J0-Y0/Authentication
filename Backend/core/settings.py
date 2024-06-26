@@ -141,6 +141,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
@@ -191,3 +192,22 @@ DJOSER = {
         "user_delete": "djoser.serializers.UserDeleteSerializer",
     },
 }
+SPECTACULAR_SETTINGS = {
+    "TITLE": "josef Project API",
+    "DESCRIPTION": "josef project description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+}
+# for offline swagger ui
+#    "drf_spectacular_sidecar",
+# SPECTACULAR_SETTINGS = {
+#     "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
+#     "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+#     "REDOC_DIST": "SIDECAR",
+#     "TITLE": "josef Project API",
+#     "DESCRIPTION": "josef project description",
+#     "VERSION": "1.0.0",
+#     "SERVE_INCLUDE_SCHEMA": False,
+#     # OTHER SETTINGS
+# }
