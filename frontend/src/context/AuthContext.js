@@ -9,9 +9,9 @@ export default AuthContext
 
 export const AuthProvider = ({ children }) => {
 
-  const authToken = localStorage.getItem('authToken')
-  const [user, setUser] = useState(authToken ? jwtDecode(authToken):null)
-  // const [authToken, setAuthToken] = useState(null)
+  const token = localStorage.getItem('authToken')
+  const [user, setUser] = useState(token ? jwtDecode(token):null)
+  const [authToken, setAuthToken] = useState(token)
   let loginUser = async (e) => {
       e.preventDefault()
       let response = await fetch('http://127.0.0.1:8000/account/api/token/', {
@@ -39,7 +39,26 @@ export const AuthProvider = ({ children }) => {
     setUser(null)
 
   }
+  let refreshToken = async () => {
+    let response = await fetch('http://127.0.0.1:8000/account/api/token/refresh', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+            'refresh': authToken.refreshToken
 
+      })
+    })
+    const data = await response.json()
+    if (response.status === 200) {
+      const token = JSON.stringify(data)
+      localStorage.setItem('authToken', token)
+      setUser(jwtDecode(token))
+    } else {
+      alert("Unable to login: some thing went wrong")
+    }
+  }
   let contextData = {
     loginUser: loginUser,
     logoutUser: logoutUser,

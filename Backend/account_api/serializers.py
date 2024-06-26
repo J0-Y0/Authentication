@@ -2,6 +2,7 @@ from rest_framework import serializers
 from account.models import CustomUser
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from .models import Notes
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -36,3 +37,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # ...
 
         return token
+
+
+class NotesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notes
+        fields = "__all__"
