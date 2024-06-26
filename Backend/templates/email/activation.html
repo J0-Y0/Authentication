@@ -1,0 +1,49 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account activation</title>
+</head>
+<body style="font-family: 'Times New Roman', Times, serif; background-color: rgb(217, 216, 216); margin: 0; padding: 0;">
+    <table cellpadding="0" cellspacing="0" border="0" align="center" style="background-color: rgb(217, 216, 216); margin: 4% 10%; border-bottom: 6px outset rgb(11, 125, 170); border-radius: 0 30px; width: 100%; max-width: 600px;">
+        <tr>
+            <td>
+                <div style="color: rgb(1, 101, 189); background-color: rgba(159, 214, 240, 0.863); padding: 20px; border-bottom: 3px inset rgb(7, 111, 163); border-top-right-radius: 30px;">
+                    <h2>{% block subject %}{% blocktrans %}Account activation on {{ site_name }}{% endblocktrans %}{% endblock subject %}</h2>
+                </div>
+                <div style="padding: 20px;">
+                    <p>{% blocktrans %}Hello {{ user.first_name }},{% endblocktrans %}</p>
+                    <p>{% blocktrans %}Please click the link below to activate your account:{% endblocktrans %}</p>
+                    <a title="{% blocktrans %}Activate your account{% endblocktrans %}" href="{{ protocol }}://{{ domain }}/{{ url|safe }}" style="display: inline-block; text-decoration: none; background-color: rgb(0, 136, 215); color: rgb(255, 255, 255); font-size: larger; margin: 20px 0; padding: 10px 20px; border-radius: 5px;">{% blocktrans %}Activate your account{% endblocktrans %}</a>
+                </div>
+
+                {% block text_body %}
+                <div style="padding: 20px;">
+                    <p>{% blocktrans %}You're receiving this email because you need to finish activation process on {{ site_name }}.{% endblocktrans %}</p>
+                    <p>{% trans "Please go to the following page to activate account:" %}</p>
+                    <a style = "background:red" href = "{{ protocol }}://{{ domain }}/{{ url|safe }}">Activate</a>
+                    <p>{% trans "Thanks for using our site!" %}</p>
+                    <p>{% blocktrans %}The {{ site_name }} team{% endblocktrans %}</p>
+                </div>
+                {% endblock text_body %}
+
+                {% block html_body %}
+                <div style="padding: 20px;">
+                    <p>{% blocktrans %}You're receiving this email because you need to finish activation process on {{ site_name }}.{% endblocktrans %}</p>
+                    <p>{% trans "Please go to the following page to activate account:" %}</p>
+                  <a href="{{ protocol }}://{{ domain }}/{{ url|safe }}" style="text-decoration: none; color: rgb(0, 136, 215);">Activate</a></p>
+                    <p>{% trans "Thanks for using our site!" %}</p>
+                    <p>{% blocktrans %}The {{ site_name }} team{% endblocktrans %}</p>
+                </div>
+                {% endblock html_body %}
+
+                <hr style="border: none; border-top: 1px solid rgb(70, 80, 80); margin: 20px 0;">
+                <h5 style="padding-left: 10px; width: 90%; text-align: center; font-style: italic; color: rgb(70, 80, 80);">From <i>JanPost:</i></h5>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -29,9 +29,11 @@ INSTALLED_APPS = [
     "account",
     "account_api",
     "rest_framework",
+    "djoser",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
     "corsheaders",
+    "drf_spectacular",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -49,7 +51,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -175,3 +177,17 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 CORS_ALLOW_ALL_ORIGINS = True
+DJOSER = {
+    "LOGIN_FIELD": "email",
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
+    "SEND_CONFIRMATION_EMAIL": True,
+    "SEND_ACTIVATION_EMAIL": True,
+    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": "/password/reset/confirm/{uid}/{token}",
+    "SERIALIZERS": {
+        "user": "account_api.serializers.CustomUserSerializer",
+        "user_create": "account_api.serializers.CustomUserSerializer",
+        "user_delete": "djoser.serializers.UserDeleteSerializer",
+    },
+}
