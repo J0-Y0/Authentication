@@ -15,8 +15,6 @@ SECRET_KEY = "django-insecure-8m1(wmrfs6ibx6v2^jtn$hd2vr2-wysb4^t3hgj^w-an419xzu
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -124,7 +122,9 @@ AUTH_USER_MODEL = "account.CustomUser"
 
 
 # django mail backend setting
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv("jo_dev_mail")
@@ -181,9 +181,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 DJOSER = {
     "LOGIN_FIELD": "email",
     "USER_CREATE_PASSWORD_RETYPE": True,
-    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
-    "SEND_CONFIRMATION_EMAIL": True,
-    "SEND_ACTIVATION_EMAIL": True,
+    "PASSWORD_RESET_CONFIRM_RETYPE": True,
+    "PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND": True,  # tell the frontend email not found if it does not exist
+    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,  # send email when email/username changed
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,  # send email when password changed
+    "SEND_ACTIVATION_EMAIL": True,  # send activation link to the user ,initially account is inactive
+    "SEND_CONFIRMATION_EMAIL": True,  # send when user registration completed and activated
     "ACTIVATION_URL": "activate/{uid}/{token}",
     "PASSWORD_RESET_CONFIRM_URL": "/password/reset/confirm/{uid}/{token}",
     "SERIALIZERS": {
@@ -193,11 +196,10 @@ DJOSER = {
     },
 }
 SPECTACULAR_SETTINGS = {
-    "TITLE": "josef Project API",
-    "DESCRIPTION": "josef project description",
-    "VERSION": "1.0.0",
+    "TITLE": "Authentication API",
+    "DESCRIPTION": "Api endpoint for authentication",
+    "VERSION": "1.0.1",
     "SERVE_INCLUDE_SCHEMA": False,
-    # OTHER SETTINGS
 }
 # for offline swagger ui
 #    "drf_spectacular_sidecar",

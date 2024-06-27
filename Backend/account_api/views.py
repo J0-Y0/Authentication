@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from .models import Notes
-
+from django.shortcuts import render
 from .serializers import CustomUserSerializer, NotesSerializer
 
 from rest_framework.permissions import (
@@ -13,6 +13,11 @@ from rest_framework.permissions import (
     IsAuthenticated,
     IsAdminUser,
 )
+
+
+def home(request):
+
+    return render("home.html")
 
 
 class IsOwnerOrReadOnlyNote(BasePermission):
