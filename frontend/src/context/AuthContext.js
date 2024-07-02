@@ -30,16 +30,20 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault();
 
     try {
-      let response = await fetch('http://127.0.0.1:8000/account/api/token/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          'email': e.target.email.value,
-          'password': e.target.password.value
-        })
-      });
+      
+      let response = await fetch(
+        "http://127.0.0.1:8000/account/api/auth/jwt/create/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: e.target.email.value,
+            password: e.target.password.value,
+          }),
+        }
+      );
 
       if (response.status === 200) {
         const data = await response.json();
@@ -47,6 +51,7 @@ export const AuthProvider = ({ children }) => {
         setAuthToken(token);
         localStorage.setItem('authToken', token);
         setUser(jwtDecode(token));
+        console.log(jwtDecode(token));
       } else {
         alert("Unable to login: invalid credentials")
       }
@@ -70,15 +75,18 @@ export const AuthProvider = ({ children }) => {
       logoutUser()
       return
     }
-    let response =  await fetch('http://127.0.0.1:8000/account/api/token/refresh/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'refresh': JSON.parse(authToken)?.refresh
-      })
-    })
+    let response = await fetch(
+      "http://127.0.0.1:8000//account/api/auth/jwt/refresh/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          refresh: JSON.parse(authToken)?.refresh,
+        }),
+      }
+    );
     const data = await response.json()
     if (response.status === 200) {
       const token = JSON.stringify(data)

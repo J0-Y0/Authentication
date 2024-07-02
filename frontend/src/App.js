@@ -4,9 +4,10 @@ import LoginPage from "./pages/LoginPage";
 import Header from "./components/Header";
 import PrivateRoute from "./utils/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
+import { Box } from "@mui/material";
 function App() {
   return (
-    <div>
+    <Box>
       <BrowserRouter>
         <AuthProvider>
           <Header></Header>
@@ -15,7 +16,7 @@ function App() {
         </AuthProvider>
       </BrowserRouter>
       
-    </div>
+    </Box>
   );
 }
 
