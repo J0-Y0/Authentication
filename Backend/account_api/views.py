@@ -17,7 +17,7 @@ from rest_framework.permissions import (
 
 def home(request):
 
-    return render("home.html")
+    return render(request, "home.html")
 
 
 class IsOwnerOrReadOnlyNote(BasePermission):
