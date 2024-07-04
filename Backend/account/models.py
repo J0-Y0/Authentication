@@ -60,6 +60,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         ordering = ("-date_joined",)
+        verbose_name = "A User"
+        verbose_name_plural = "Users"
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} | {self.email}"

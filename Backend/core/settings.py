@@ -178,6 +178,8 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 CORS_ALLOW_ALL_ORIGINS = True
+FRONTEND_URL = "http://127.0.0.1:3000"
+
 DJOSER = {
     "LOGIN_FIELD": "email",
     "USER_CREATE_PASSWORD_RETYPE": True,
@@ -187,7 +189,7 @@ DJOSER = {
     "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,  # send email when password changed
     "SEND_ACTIVATION_EMAIL": True,  # send activation link to the user ,initially account is inactive
     "SEND_CONFIRMATION_EMAIL": True,  # send when user registration completed and activated
-    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "ACTIVATION_URL": FRONTEND_URL + "/account/activate/{uid}/{token}",
     "PASSWORD_RESET_CONFIRM_URL": "/password/reset/confirm/{uid}/{token}",
     "SERIALIZERS": {
         "user": "account_api.serializers.CustomUserSerializer",
@@ -201,6 +203,7 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.1",
     "SERVE_INCLUDE_SCHEMA": False,
 }
+
 # for offline swagger ui
 #    "drf_spectacular_sidecar",
 # SPECTACULAR_SETTINGS = {

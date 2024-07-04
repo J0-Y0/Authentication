@@ -17,13 +17,7 @@ export const LoadingBar = () => {
 }
 
 export  function LoadingButton({value ="Send",type="button"}) {
-    const { loading } = React.useContext(AuthContext);
-
-
-
-
-
-
+  const { loading } = React.useContext(AuthContext);
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Box sx={{ marginY: "10px" , position: "relative" }}>

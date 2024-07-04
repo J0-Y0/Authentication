@@ -8,6 +8,7 @@ import { Box } from "@mui/material";
 import Signup from "./pages/SignUpPage"
 import Notification from "./utils/Notification";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
+import AccountActivationPage from "./pages/AccountActivationPage";
 function App() {
 
   return (
@@ -26,6 +27,12 @@ function App() {
           </Routes>{" "}
           <Routes>
             <Route path="/signup/success" element={<SignupSuccessPage />} />
+          </Routes>
+          <Routes>
+            <Route
+              path="/account/activate/:uid/:token/"
+              element={<AccountActivationPage />}
+            />
           </Routes>
           <Notification />
         </AuthProvider>
