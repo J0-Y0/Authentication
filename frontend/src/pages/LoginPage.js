@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '../utils/LoadingBar';
 
 const  LoginPage = () => {
   const { loginUser } = useContext(AuthContext)
@@ -14,9 +15,16 @@ const  LoginPage = () => {
         padding: 5,
       }}
     >
-      <Paper elevation={4} sx={{ height: "auto", padding: 5 , borderRadius:2}}>
+      <Paper elevation={4} sx={{ height: "auto", padding: 5, borderRadius: 2 }}>
         <form onSubmit={loginUser}>
-          <Typography variant='h6' fontWeight={700} component="div" color={"primary"}>Login | Welcome back</Typography>
+          <Typography
+            variant="h6"
+            fontWeight={700}
+            component="div"
+            color={"primary"}
+          >
+            Login | Welcome back
+          </Typography>
           <TextField
             fullWidth
             id="standard-basic"
@@ -36,9 +44,8 @@ const  LoginPage = () => {
             name="password"
             type="password"
           />
-          <Button sx={{ marginY: "10px" }} type="submit" variant="contained">
-            Login
-          </Button>
+          <LoadingButton type="submit"  value='Login'/>
+        
         </form>
       </Paper>
     </Box>

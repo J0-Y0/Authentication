@@ -9,25 +9,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { LoadingBar, LoadingButton } from "../utils/LoadingBar";
 
 const SignupPage = () => {
-    const [loading, setLoading] = useState(false);
 
-  const { Signup, message } = useContext(AuthContext);
+  const { Signup } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (message) {
-      setLoading(false)
-    }
-  },[message])
 
-  
-  const handleSubmit=()=>{
-    
-          setLoading(true);
-          Signup();
-        
-  }
   return (
     <Box
       sx={{
@@ -41,9 +29,7 @@ const SignupPage = () => {
         elevation={4}
         sx={{ height: "auto", padding: 5, borderRadius: 2, maxWidth: 400 }}
       >
-        <form
-          onSubmit={handleSubmit} method="post"
-        >
+        <form onSubmit={Signup}>
           <Typography
             variant="h6"
             fontWeight={700}
@@ -52,21 +38,19 @@ const SignupPage = () => {
           >
             Signup
           </Typography>
-         { loading&&
-          <LinearProgress color="info" sx={{ padding: 0.5 }} />}
+          <LoadingBar />
           <TextField
             fullWidth
-            id="standard-basic"
+            
             label="First Name"
             variant="standard"
             required
-            name="first_name"
-            type="text"
+            name="fname"
             sx={{ marginY: "10px" }}
           />
           <TextField
             fullWidth
-            id="standard-basic"
+            
             label="Email"
             variant="standard"
             required
@@ -76,7 +60,7 @@ const SignupPage = () => {
           />
           <TextField
             fullWidth
-            id="standard-basic"
+            
             label="Password"
             variant="standard"
             required
@@ -86,16 +70,15 @@ const SignupPage = () => {
           />
           <TextField
             fullWidth
-            id="standard-basic"
+            
             label="Confirm"
             variant="standard"
             required
             name="re_password"
             type="password"
           />
-          <Button sx={{ marginY: "10px" }} type="submit" variant="contained">
-            Signup
-          </Button>
+        
+          <LoadingButton value="Signup" type="submit" />
         </form>
       </Paper>
     </Box>

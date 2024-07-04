@@ -7,6 +7,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { Box } from "@mui/material";
 import Signup from "./pages/SignUpPage"
 import Notification from "./utils/Notification";
+import SignupSuccessPage from "./pages/SignupSuccessPage";
 function App() {
 
   return (
@@ -20,15 +21,15 @@ function App() {
           <PrivateRoute path="/login">
             <LoginPage />
           </PrivateRoute>
-
           <Routes>
             <Route path="/signup" element={<Signup></Signup>} />
+          </Routes>{" "}
+          <Routes>
+            <Route path="/signup/success" element={<SignupSuccessPage />} />
           </Routes>
-
-          <Notification/>
+          <Notification />
         </AuthProvider>
       </BrowserRouter>
-      
     </Box>
   );
 }
