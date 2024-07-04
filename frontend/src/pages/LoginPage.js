@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Paper, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '../utils/LoadingBar';
-
+import LoginIcon from '@mui/icons-material/Login';
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 const  LoginPage = () => {
   const { loginUser } = useContext(AuthContext)
   
@@ -27,7 +28,6 @@ const  LoginPage = () => {
           </Typography>
           <TextField
             fullWidth
-            id="standard-basic"
             label="Username/Email"
             variant="standard"
             required
@@ -37,15 +37,25 @@ const  LoginPage = () => {
           />
           <TextField
             fullWidth
-            id="standard-basic"
             label="Password"
             variant="standard"
             required
             name="password"
             type="password"
           />
-          <LoadingButton type="submit"  value='Login'/>
-        
+          <Box
+            display={"flex"}
+            sx={{ justifyContent: "center", flexDirection: "column",marginY:2 }}
+          >
+            <LoadingButton startIcon = {<LoginIcon/>} type="submit" value="Login" width = "100%" />
+            {/* <Typography> Don't have an account</Typography> */}
+            <Button endIcon = {<KeyboardDoubleArrowRightIcon/>}  variant="text" href="/signup" component="a">
+              Don't have account ?
+            </Button>
+           <Button variant="text" href="/signup" component="a">
+            Forget Password ?
+          </Button>
+          </Box>
         </form>
       </Paper>
     </Box>

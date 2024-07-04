@@ -16,12 +16,12 @@ export const LoadingBar = () => {
     return ( loading&&<LinearProgress />);
 }
 
-export  function LoadingButton({value ="Send",type="button"}) {
+export  function LoadingButton({width,value ="Send",type="button" ,...others}) {
   const { loading } = React.useContext(AuthContext);
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Box sx={{ marginY: "10px" , position: "relative" }}>
-        <Button variant="contained" disabled={loading} type={type}>
+    <Box sx={{ display: "flex", alignItems: "center" ,width:{width} }}      >
+      <Box sx={{ marginY: "10px" , position: "relative",width:{width} }}>
+        <Button variant="contained" disabled={loading} type={type} sx={{width : {width}}} {...others}>
           {value}
         </Button>
         {loading && (
