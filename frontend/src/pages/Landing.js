@@ -14,6 +14,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import img from "../asset/signup.png";
 import React from "react";
 
 const Landing = () => {
@@ -76,15 +77,24 @@ const Landing = () => {
         {/* display="flex" // direction="row" flexDirection="row" spacing={1}
         justifyContent="space-between" flexGrow={true}> */}
         {features.map((feature) => (
-          <Card flex={4} sx={{ maxWidth: 345 }}>
+          <Card
+            flex={4}
+            sx={{
+              maxWidth: 345,
+              "&:hover": {
+                backgroundColor: "lightGreen",
+                h2: { color: "green", fontWeight: "bold" },
+              },
+            }}
+          >
             <CardMedia
               component="img"
               alt="green iguana"
               height="140"
-              image="/static/images/cards/contemplative-reptile.jpg"
+              image={img}
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5" component="h2">
                 {feature.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
