@@ -10,15 +10,34 @@ import Notification from "./utils/Notification";
 import SignupSuccessPage from "./pages/SignupSuccessPage";
 import AccountActivationPage from "./pages/AccountActivationPage";
 import Landing from "./pages/Landing";
+import PasswordReset from "./pages/PasswordReset";
+import PasswordResetConfirm from "./pages/PasswordResetConfirm";
 function App() {
   return (
     <Box>
       <AuthProvider>
         <Header></Header>
+        <Box py={5}></Box>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="signup/" element={<Signup />} />
-          <Route path="login/" element={<LoginPage />} />
+          <Route path="account/login/" element={<LoginPage />} />
+
+          <Route
+            path="account/activate/:uid/:token/"
+            element={<AccountActivationPage />}
+          />
+          <Route path="account/reset" element={<PasswordReset />} />
+          <Route
+            path="account/reset/confirm"
+            element={<PasswordResetConfirm />}
+          />
+
+          <Route path="account/signup/" element={<Signup />} />
+
+          <Route
+            path="account/signup/success"
+            element={<SignupSuccessPage />}
+          />
           <Route
             path="dashboard/"
             element={
@@ -27,11 +46,6 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/account/activate/:uid/:token/"
-            element={<AccountActivationPage />}
-          />
-          <Route path="/signup/success" element={<SignupSuccessPage />} />
         </Routes>
         <Notification />
       </AuthProvider>

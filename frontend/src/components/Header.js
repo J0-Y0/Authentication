@@ -77,13 +77,13 @@ const Header = () => {
                   logoutUser();
                 }}
               >
-                Logout
+                LOGOUT
               </MenuItem>
             </Menu>
           </Box>
         ) : (
-          <StyledLink color="inherit" to="login">
-            Login
+          <StyledLink color="inherit" to="account/login/">
+            LOGIN
           </StyledLink>
         )}
       </Toolbar>

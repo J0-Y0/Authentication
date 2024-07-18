@@ -129,6 +129,56 @@ export const AuthProvider = ({ children }) => {
     setAuthToken(null);
     navigate("/login");
   };
+
+  ///account/api/auth/users/reset_password/
+  let resetPassword = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      let response = await fetch(
+        "http://127.0.0.1:8000/account/api/auth/users/reset_password/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: e.target.email.value,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const msg = {
+          content: "Account created. Please activate your account next.",
+          severity: "success",
+        };
+        setMessage(msg);
+        setLoading(false);
+      } else {
+        console.log(data);
+        const value = Object.values(data);
+        const msg = {
+          content: value,
+          severity: "error",
+        };
+        setMessage(msg);
+        setLoading(false);
+      }
+    } catch (error) {
+      const msg = {
+        content:
+          "Something went wrong! Please check your internet connection or try again later.",
+        severity: "warning",
+      };
+      setMessage(msg);
+      setLoading(false);
+    }
+  };
+
   let updateToken = async () => {
     console.log("Updating token");
     if (!authToken) {
@@ -189,6 +239,7 @@ export const AuthProvider = ({ children }) => {
     user: user,
     authToken: authToken,
     loading: loading,
+    resetPassword: resetPassword,
   };
   return (
     <AuthContext.Provider value={contextData}>
