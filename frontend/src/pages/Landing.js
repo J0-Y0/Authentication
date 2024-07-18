@@ -7,10 +7,7 @@ import {
   CardContent,
   CardMedia,
   Divider,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
+
   Stack,
   Typography,
 } from "@mui/material";

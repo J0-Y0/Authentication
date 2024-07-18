@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { Alert, Snackbar } from "@mui/material";
+import {redirect} from "react-router-dom"
 
 export const AuthContext = createContext();
 export default AuthContext;
@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-
   let loginUser = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -52,6 +51,8 @@ export const AuthProvider = ({ children }) => {
         setLoading(false); //loading completed
 
         console.log(jwtDecode(token));
+      redirect('/dsds')
+
       } else {
         setLoading(false);
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -9,9 +9,21 @@ import {
   Toolbar,
   Typography,
   Button,
+  styled,
+  Tooltip,
+  Menu,
+  Avatar,
+  MenuItem,
 } from "@mui/material";
+import pp from "../asset/signup.png";
 
 const Header = () => {
+  const StyledLink = styled(Link)`
+    color: white;
+    text-decoration:none;
+  `;
+
+  const [openMenu,setOpenMenu] = useState(null)
   const { user, logoutUser } = useContext(AuthContext);
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -26,27 +38,43 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <StyledLink to="/" sx={{ flexGrow: 1 }}>
             JWT Authentication
-          </Typography>
+          </StyledLink>
           {user && (
-            <Typography variant="h6" component="div">
-              {user.name} |
-            </Typography>
+            <Box sx={{ flexGrow: 0 }}>
+              <Avatar
+                onClick={() => setOpenMenu(true)}
+                alt="profile"
+                src={pp}
+              />
+
+              <Menu
+                sx={{ mt: "45px" }}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={openMenu}
+                onClose={() => setOpenMenu(false)}
+              >
+                <MenuItem onClick={() => setOpenMenu(false)}>Profile</MenuItem>
+                <MenuItem onClick={() => { 
+                   setOpenMenu(false)
+                  logoutUser();
+                }}>Logout</MenuItem>
+              </Menu>
+            </Box>
           )}
 
-          <Link color="inherit" to="Home">
-            Home
-          </Link>
-          <Typography component={"span"}>|</Typography>
-          {user ? (
-            <Button color="inherit" onClick={logoutUser}>
-              Logout
-            </Button>
-          ) : (
-            <Link color="inherit" to="login">
+          {!user && (
+            <StyledLink color="inherit" to="login">
               Login
-            </Link>
+            </StyledLink>
           )}
         </Toolbar>
       </AppBar>
