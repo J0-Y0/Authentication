@@ -1,12 +1,19 @@
-import React, { useContext } from 'react'
-import AuthContext from '../context/AuthContext'
-import { Box, Button, ButtonGroup, Paper, TextField, Typography } from '@mui/material';
-import { LoadingButton } from '../utils/LoadingBar';
-import LoginIcon from '@mui/icons-material/Login';
+import React, { useContext } from "react";
+import AuthContext from "../context/AuthContext";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { LoadingButton } from "../utils/LoadingBar";
+import LoginIcon from "@mui/icons-material/Login";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-const  LoginPage = () => {
-  const { loginUser } = useContext(AuthContext)
-  
+const LoginPage = () => {
+  const { loginUser } = useContext(AuthContext);
+
   return (
     <Box
       sx={{
@@ -45,21 +52,35 @@ const  LoginPage = () => {
           />
           <Box
             display={"flex"}
-            sx={{ justifyContent: "center", flexDirection: "column",marginY:2 }}
+            sx={{
+              justifyContent: "center",
+              flexDirection: "column",
+              marginY: 2,
+            }}
           >
-            <LoadingButton startIcon = {<LoginIcon/>} type="submit" value="Login" width = "100%" />
+            <LoadingButton
+              startIcon={<LoginIcon />}
+              type="submit"
+              value="Login"
+              width="100%"
+            />
             {/* <Typography> Don't have an account</Typography> */}
-            <Button endIcon = {<KeyboardDoubleArrowRightIcon/>}  variant="text" href="/signup" component="a">
+            <Button
+              endIcon={<KeyboardDoubleArrowRightIcon />}
+              variant="text"
+              href="/signup"
+              component="a"
+            >
               Don't have account ?
             </Button>
-           <Button variant="text" href="/signup" component="a">
-            Forget Password ?
-          </Button>
+            <Button variant="text" href="/signup" component="a">
+              Forget Password ?
+            </Button>
           </Box>
         </form>
       </Paper>
     </Box>
   );
-}
+};
 
-export default LoginPage
+export default LoginPage;

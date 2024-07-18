@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import {redirect} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 export default AuthContext;
@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   let loginUser = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -44,15 +45,13 @@ export const AuthProvider = ({ children }) => {
       if (response.status === 200) {
         const data = await response.json();
         const token = JSON.stringify(data);
+
         setAuthToken(token);
         localStorage.setItem("authToken", token);
         setUser(jwtDecode(token));
 
         setLoading(false); //loading completed
-
-        console.log(jwtDecode(token));
-      redirect('/dsds')
-
+        navigate("/dashboard");
       } else {
         setLoading(false);
 
@@ -62,7 +61,7 @@ export const AuthProvider = ({ children }) => {
         };
         setMessage(msg);
       }
-    } catch (error) { 
+    } catch (error) {
       setLoading(false);
 
       const msg = {
@@ -128,6 +127,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("authToken");
     setUser(null);
     setAuthToken(null);
+    navigate("/login");
   };
   let updateToken = async () => {
     console.log("Updating token");

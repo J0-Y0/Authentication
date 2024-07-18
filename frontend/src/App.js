@@ -17,24 +17,21 @@ function App() {
         <Header></Header>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/signup" element={<Signup></Signup>} />
-        </Routes>
-
-        <PrivateRoute path="/home">
-          <HomePage />
-        </PrivateRoute>
-        <PrivateRoute path="/login">
-          <LoginPage />
-        </PrivateRoute>
-
-        <Routes>
-          <Route path="/signup/success" element={<SignupSuccessPage />} />
-        </Routes>
-        <Routes>
+          <Route path="signup/" element={<Signup />} />
+          <Route path="login/" element={<LoginPage />} />
+          <Route
+            path="dashboard/"
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/account/activate/:uid/:token/"
             element={<AccountActivationPage />}
           />
+          <Route path="/signup/success" element={<SignupSuccessPage />} />
         </Routes>
         <Notification />
       </AuthProvider>

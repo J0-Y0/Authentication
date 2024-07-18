@@ -9,19 +9,29 @@ import SaveIcon from "@mui/icons-material/Save";
 import AuthContext from "../context/AuthContext";
 import { LinearProgress } from "@mui/material";
 
-
 export const LoadingBar = () => {
-    const {loading} = React.useContext(AuthContext)
-    
-    return ( loading&&<LinearProgress />);
-}
+  const { loading } = React.useContext(AuthContext);
 
-export  function LoadingButton({width,value ="Send",type="button" ,...others}) {
+  return loading && <LinearProgress />;
+};
+
+export function LoadingButton({
+  width,
+  value = "Send",
+  type = "button",
+  ...others
+}) {
   const { loading } = React.useContext(AuthContext);
   return (
-    <Box sx={{ display: "flex", alignItems: "center" ,width:{width} }}      >
-      <Box sx={{ marginY: "10px" , position: "relative",width:{width} }}>
-        <Button variant="contained" disabled={loading} type={type} sx={{width : {width}}} {...others}>
+    <Box sx={{ display: "flex", alignItems: "center", width: { width } }}>
+      <Box sx={{ marginY: "10px", position: "relative", width: { width } }}>
+        <Button
+          variant="contained"
+          disabled={loading}
+          type={type}
+          sx={{ width: { width } }}
+          {...others}
+        >
           {value}
         </Button>
         {loading && (

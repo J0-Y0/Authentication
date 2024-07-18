@@ -20,15 +20,20 @@ import pp from "../asset/signup.png";
 const Header = () => {
   const StyledLink = styled(Link)`
     color: white;
-    text-decoration:none;
+    text-decoration: none;
   `;
 
-  const [openMenu,setOpenMenu] = useState(null)
+  const [openMenu, setOpenMenu] = useState(false);
   const { user, logoutUser } = useContext(AuthContext);
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+    <AppBar position="fixed">
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box>
           <IconButton
             size="large"
             edge="start"
@@ -38,47 +43,51 @@ const Header = () => {
           >
             <MenuIcon />
           </IconButton>
-          <StyledLink to="/" sx={{ flexGrow: 1 }}>
-            JWT Authentication
-          </StyledLink>
-          {user && (
-            <Box sx={{ flexGrow: 0 }}>
+          <StyledLink to="/">JWT Authentication</StyledLink>
+        </Box>
+
+        {user ? (
+          <Box>
+            <StyledLink to="dashboard/"> Dashboard </StyledLink>
+            <IconButton color="inherit">
               <Avatar
                 onClick={() => setOpenMenu(true)}
                 alt="profile"
                 src={pp}
               />
+            </IconButton>
 
-              <Menu
-                sx={{ mt: "45px" }}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={openMenu}
-                onClose={() => setOpenMenu(false)}
-              >
-                <MenuItem onClick={() => setOpenMenu(false)}>Profile</MenuItem>
-                <MenuItem onClick={() => { 
-                   setOpenMenu(false)
+            <Menu
+              sx={{ mt: "45px" }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={openMenu}
+              onClose={() => setOpenMenu(false)}
+            >
+              <MenuItem onClick={() => setOpenMenu(false)}>Profile</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setOpenMenu(false);
                   logoutUser();
-                }}>Logout</MenuItem>
-              </Menu>
-            </Box>
-          )}
-
-          {!user && (
-            <StyledLink color="inherit" to="login">
-              Login
-            </StyledLink>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
+                }}
+              >
+                Logout
+              </MenuItem>
+            </Menu>
+          </Box>
+        ) : (
+          <StyledLink color="inherit" to="login">
+            Login
+          </StyledLink>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 
