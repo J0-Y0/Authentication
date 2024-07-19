@@ -1,17 +1,26 @@
-import React from 'react'
-import { useParams } from 'react-router-dom';
+import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import CenteredContainer from "../utils/CenteredContainer";
+import { LoadingBar } from "../utils/LoadingBar";
 
 const AccountActivationPage = () => {
-      const { uid, token } = useParams();
+  const { uid, token } = useParams();
+  const { Activate } = useContext(AuthContext);
+
+useEffect(() => {
+    if (uid && token) {
+      Activate(uid, token);
+    }
+  }, []);
 
   return (
-    <div>
-          Account Activation Page 
-          uid={uid}
-          <br></br>
-          token={token}
-    </div>
-  )
-}
+    <CenteredContainer>
+      <LoadingBar />
+      
+      <div>Activating your account...</div>
+    </CenteredContainer>
+  );
+};
 
-export default AccountActivationPage
+export default AccountActivationPage;

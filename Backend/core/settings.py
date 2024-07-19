@@ -190,7 +190,7 @@ DJOSER = {
     "SEND_ACTIVATION_EMAIL": True,  # send activation link to the user ,initially account is inactive
     "SEND_CONFIRMATION_EMAIL": True,  # send when user registration completed and activated
     "ACTIVATION_URL": FRONTEND_URL + "/account/activate/{uid}/{token}",
-    "PASSWORD_RESET_CONFIRM_URL": "/password/reset/confirm/{uid}/{token}",
+    "PASSWORD_RESET_CONFIRM_URL": FRONTEND_URL + "/account/reset/confirm/{uid}/{token}",
     "SERIALIZERS": {
         "user": "account_api.serializers.CustomUserSerializer",
         "user_create": "account_api.serializers.CustomUserSerializer",

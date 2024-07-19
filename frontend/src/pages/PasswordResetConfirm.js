@@ -5,7 +5,10 @@ import { LoadingBar, LoadingButton } from "../utils/LoadingBar";
 import { LockReset, RecordVoiceOver, ResetTv } from "@mui/icons-material";
 import StyledLink from "../utils/StyledLink";
 import AuthContext from "../context/AuthContext";
+import { useParams } from "react-router-dom";
 const PasswordResetConfirm = () => {
+  const {uid,token}= useParams()
+  const {resetPasswordConfirm} = useContext(AuthContext)
   return (
     <CenteredContainer>
       <Typography
@@ -19,14 +22,15 @@ const PasswordResetConfirm = () => {
 
       <LoadingBar />
 
-      <form>
+      <form onSubmit={ resetPasswordConfirm( uid, token)}>
+   
         <Typography></Typography>
         <TextField
           fullWidth
           label="New password"
           variant="standard"
           required
-          name="email"
+          name="new_password"
           type="password"
         />{" "}
         <TextField
@@ -34,7 +38,7 @@ const PasswordResetConfirm = () => {
           label="confirm"
           variant="standard"
           required
-          name="email"
+          name="re_new_password"
           type="password"
         />
         <Stack direction="row" alignItems="center">

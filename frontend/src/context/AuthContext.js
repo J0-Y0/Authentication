@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 export default AuthContext;
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
         setUser(jwtDecode(token));
 
         setLoading(false); //loading completed
-        navigate("/dashboard");
+        navigate("dashboard");
       } else {
         setLoading(false);
 
@@ -102,6 +102,7 @@ export const AuthProvider = ({ children }) => {
         };
         setMessage(msg);
         setLoading(false);
+        navigate("/account/signup/success");
       } else {
         console.log(data);
         const value = Object.values(data);
@@ -122,12 +123,60 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  let Activate = async (uid,token) => {
+      setLoading(true);
+      try {
+        let response = await fetch(
+          "http://127.0.0.1:8000/account/api/auth/users/activation/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              uid: uid,
+              token: token
+            }),
 
+          }
+        );
+
+
+        if (response.ok) {
+          const msg = {
+            content: "Well done, Account has been successfully Activated, ",
+            severity: "success",
+          };
+          setMessage(msg);
+          setLoading(false);
+          navigate("/account/login/");
+        } else {
+          const data = await response.json();
+
+          console.log(data);
+          const value = Object.values(data);
+          const msg = {
+            content:"Ops, Activation link expired or invalidated ,"+ value,
+            severity: "error",
+          };
+          setMessage(msg);
+          setLoading(false);
+        }
+      } catch (error) {
+        const msg = {
+          content:
+            "Something went wrong! Please check your internet connection or try again later.",
+          severity: "warning",
+        };
+        setMessage(msg);
+        setLoading(false);
+      }
+    };
   let logoutUser = () => {
     localStorage.removeItem("authToken");
     setUser(null);
     setAuthToken(null);
-    navigate("/login");
+    navigate("/account/login");
   };
 
   ///account/api/auth/users/reset_password/
@@ -149,17 +198,17 @@ export const AuthProvider = ({ children }) => {
         }
       );
 
-      const data = await response.json();
+
 
       if (response.ok) {
         const msg = {
-          content: "Account created. Please activate your account next.",
+          content: "we have received your request, check your inbox",
           severity: "success",
         };
         setMessage(msg);
         setLoading(false);
       } else {
-        console.log(data);
+        const data = await response.json();
         const value = Object.values(data);
         const msg = {
           content: value,
@@ -171,13 +220,71 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       const msg = {
         content:
-          "Something went wrong! Please check your internet connection or try again later.",
+          "Something went wrong! Please check your internet connection or try again later." + String(error),
         severity: "warning",
       };
       setMessage(msg);
       setLoading(false);
     }
   };
+  let resetPasswordConfirm = async (e, uid, token) => {
+         e.preventDefault();
+    try{
+    let response = await fetch(
+        "http://127.0.0.1:8000/account/api/auth/jwt/create/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              "uid": uid,
+              "token": token,
+              "new_password":e.target.new_password,
+              "re_new_password": e.target.new_password,
+          }),
+
+        }
+    );
+    if (response.ok) {
+                 navigate("/account/login/")
+
+       const msg = {
+          content: "Password changed, please login  with new password",
+          severity: "success",
+        };
+        setMessage(msg);
+        setLoading(false);
+      } else {
+        const data = await response.json();
+        const value = Object.values(data);
+        const msg = {
+          content: value,
+          severity: "error",
+        };
+        setMessage(msg);
+        setLoading(false);
+      }
+    
+  
+  
+   } catch (error) {
+      const msg = {
+        content:
+          "Something went wrong! Please check your internet connection or try again later." + String(error),
+        severity: "warning",
+      };
+      setMessage(msg);
+      setLoading(false);
+    }
+  
+  
+  
+  
+  
+  }
+    
+  
 
   let updateToken = async () => {
     console.log("Updating token");
@@ -235,11 +342,14 @@ export const AuthProvider = ({ children }) => {
     loginUser: loginUser,
     logoutUser: logoutUser,
     Signup: Signup,
+    Activate:Activate,
     message: message,
     user: user,
     authToken: authToken,
     loading: loading,
+    resetPasswordConfirm:resetPasswordConfirm,
     resetPassword: resetPassword,
+    
   };
   return (
     <AuthContext.Provider value={contextData}>
